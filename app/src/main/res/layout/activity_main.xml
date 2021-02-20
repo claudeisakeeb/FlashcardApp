@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Chick-fil-a is open everyday except which day?"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:background="@drawable/rounded_rectangle_question"
+        android:elevation="15dp"/>
+
+    <TextView
+        android:id="@+id/real_answer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Sunday"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        android:background="@drawable/rounded_rectangle_answer"
+        android:elevation="15dp"/>
+
+    <TextView
+        android:id="@+id/answer1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/question"
+        android:layout_marginTop="50dp"
+        android:text="Friday"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:visibility="visible"
+        android:background="@color/orange"
+        android:elevation="15dp"/>
+
+    <TextView
+        android:id="@+id/answer2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/answer1"
+        android:layout_marginTop="50dp"
+        android:text="Saturday"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:visibility="visible"
+        android:background="@color/orange"
+        android:elevation="15dp"/>
+
+    <TextView
+        android:id="@+id/answer3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/answer2"
+        android:layout_marginTop="50dp"
+        android:text="Sunday"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:visibility="visible"
+        android:background="@color/orange"
+        android:elevation="15dp"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/toggle_choices_visibility"
+        android:src="@drawable/hide_visibility"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
