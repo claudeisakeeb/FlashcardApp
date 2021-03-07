@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewFlashcard">
+
+<!--    New question input-->
+    <EditText
+        android:id="@+id/new_card_question"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="Enter the new question here"
+        android:layout_centerHorizontal="true"/>
+
+<!--    New answer input -->
+    <EditText
+        android:id="@+id/new_card_answer"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="Enter the new answer here"
+        android:layout_below="@id/new_card_question"
+        android:layout_centerHorizontal="true"/>
+
+<!--    Wrong answer #1 -->
+    <EditText
+        android:id="@+id/new_card_wrong_answer1"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="Enter wrong option #1"
+        android:layout_below="@id/new_card_answer"
+        android:layout_centerHorizontal="true"/>
+
+<!--    Wrong answer #2-->
+    <EditText
+        android:id="@+id/new_card_wrong_answer2"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:hint="Enter wrong option #2"
+        android:layout_below="@id/new_card_wrong_answer1"
+        android:layout_centerHorizontal="true"/>
+
+<!--    Save new flashcard button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/save_new_flashcard"
+        android:src="@drawable/save_new_flashcard"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+<!--    Cancel button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/exit_new_flashcard"
+        android:src="@drawable/cancel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

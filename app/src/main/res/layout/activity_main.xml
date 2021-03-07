@@ -7,6 +7,7 @@
     android:id="@+id/parent"
     tools:context=".MainActivity">
 
+<!--    Question side of the flashcard-->
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
         android:background="@drawable/rounded_rectangle_question"
         android:elevation="15dp"/>
 
+<!--    Answer side of the flashcard-->
     <TextView
         android:id="@+id/real_answer"
         android:layout_width="match_parent"
@@ -28,6 +30,7 @@
         android:background="@drawable/rounded_rectangle_answer"
         android:elevation="15dp"/>
 
+<!--    First answer option-->
     <TextView
         android:id="@+id/answer1"
         android:layout_width="match_parent"
@@ -41,6 +44,7 @@
         android:background="@color/orange"
         android:elevation="15dp"/>
 
+<!--    Second answer option -->
     <TextView
         android:id="@+id/answer2"
         android:layout_width="match_parent"
@@ -54,6 +58,7 @@
         android:background="@color/orange"
         android:elevation="15dp"/>
 
+<!--    Third answer option -->
     <TextView
         android:id="@+id/answer3"
         android:layout_width="match_parent"
@@ -67,12 +72,31 @@
         android:background="@color/orange"
         android:elevation="15dp"/>
 
+<!--    Show/hide answer options button -->
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/toggle_choices_visibility"
         android:src="@drawable/hide_visibility"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
+
+<!--    Add flashcard button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/add_flashcard"
+        android:src="@drawable/add_card"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+<!--    Edit flashcard button-->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/edit_flashcard"
+        android:src="@drawable/edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>
