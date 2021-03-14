@@ -30,13 +30,43 @@
         android:background="@drawable/rounded_rectangle_answer"
         android:elevation="15dp"/>
 
+    <!--    Previous flashcard button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/previous_icon"
+        android:src="@drawable/previous"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/question"
+        android:layout_alignParentLeft="true"/>
+
+    <!--    Previous flashcard button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/remove_flashcard"
+        android:src="@drawable/trash"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/question"
+        android:layout_centerHorizontal="true"/>
+
+    <!--    Next flashcard button -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/next_icon"
+        android:src="@drawable/next"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/question"
+        android:layout_alignParentRight="true"/>
+
 <!--    First answer option-->
     <TextView
         android:id="@+id/answer1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/question"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:text="Friday"
         android:gravity="center"
         android:textSize="30sp"
