@@ -6,9 +6,9 @@
 This is my flashcard app for  the CodePath Android Development Program
 
 ### App Walk-though
-- User's cards will save on reload:
+- User's cards will save on reload:<br>
 <img src="http://g.recordit.co/UBt59tUXdo.gif" width=200><br>
-- Every other feature:
+- Every other feature:<br>
 <img src="http://g.recordit.co/bunX1Iei9S.gif" width=200><br>
 
 ## Required
