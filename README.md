@@ -1,6 +1,6 @@
 ## Claude's Flashcard App
 
-# Lab 2 :
+# Lab 3 :
 
 ## Required
 - [x] User can create a card and still see their created card when the app is relaunched.
