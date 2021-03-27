@@ -2,7 +2,10 @@ package com.example.flashcard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.flashcard.lab3.Flashcard;
 import com.example.flashcard.lab3.FlashcardDatabase;
 import com.google.android.material.snackbar.Snackbar;
+import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.List;
 
@@ -21,10 +25,32 @@ public class MainActivity extends AppCompatActivity {
     List<Flashcard> allFlashcards;
     // Current flashcard index
     int index = 0;
+    // Showing question or answer
+    boolean isShowingQuestion = true;
+    //Countdown for each flashcard
+    CountDownTimer countDownTimer;
+
+    private void startTimer() {
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize countdown timer
+        countDownTimer = new CountDownTimer(16000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                ((TextView) findViewById(R.id.timer)).setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+            }
+        };
+
+        startTimer();
 
         // Initialize flashcard database
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
@@ -49,16 +75,67 @@ public class MainActivity extends AppCompatActivity {
         // User can click on question to display answer
         findViewById(R.id.question).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                ((TextView) findViewById(R.id.question)).setVisibility(View.INVISIBLE);
-                ((TextView) findViewById(R.id.real_answer)).setVisibility(View.VISIBLE); // Make answer visible
+
+                View questionSideView = findViewById(R.id.question);
+                View answerSideView = findViewById(R.id.real_answer);
+
+                questionSideView.setCameraDistance(25000);
+                answerSideView.setCameraDistance(25000);
+
+                questionSideView.animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        questionSideView.setVisibility(View.INVISIBLE);
+                                        answerSideView.setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        answerSideView.setRotationY(-90);
+                                        answerSideView.animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
+
+//                questionSideView.setVisibility(View.INVISIBLE);
+//                answerSideView.setVisibility(View.VISIBLE);
+                isShowingQuestion = false;
             }
         });
 
         // User can click on answer to display question again
         findViewById(R.id.real_answer).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                ((TextView) findViewById(R.id.real_answer)).setVisibility(View.INVISIBLE);
-                ((TextView) findViewById(R.id.question)).setVisibility(View.VISIBLE); // Make answer visible
+                View questionSideView = findViewById(R.id.question);
+                View answerSideView = findViewById(R.id.real_answer);
+
+                questionSideView.setCameraDistance(25000);
+                answerSideView.setCameraDistance(25000);
+
+                answerSideView.animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        answerSideView.setVisibility(View.INVISIBLE);
+                                        questionSideView.setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        questionSideView.setRotationY(-90);
+                                        questionSideView.animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
+
+                isShowingQuestion = true;
             }
         });
 
@@ -66,15 +143,71 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.previous_icon).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (index > 0) {
-                    index --;
-                    ((TextView) findViewById(R.id.question)).setText(allFlashcards.get(index).getQuestion());
-                    ((TextView) findViewById(R.id.real_answer)).setText(allFlashcards.get(index).getAnswer());
-                    ((TextView) findViewById(R.id.answer1)).setText(allFlashcards.get(index).getWrongAnswer1());
-                    ((TextView) findViewById(R.id.answer2)).setText(allFlashcards.get(index).getWrongAnswer2());
-                    ((TextView) findViewById(R.id.answer3)).setText(allFlashcards.get(index).getAnswer());
-                    ((TextView) findViewById(R.id.answer1)).setBackgroundColor(getResources().getColor(R.color.orange));
-                    ((TextView) findViewById(R.id.answer2)).setBackgroundColor(getResources().getColor(R.color.orange));
-                    ((TextView) findViewById(R.id.answer3)).setBackgroundColor(getResources().getColor(R.color.orange));
+
+                    final Animation leftInAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.left_in);
+                    final Animation rightOutAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.right_out);
+
+                    rightOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            if (isShowingAnswers[0]) {
+                                findViewById(R.id.answer1).startAnimation(rightOutAnim);
+                                findViewById(R.id.answer2).startAnimation(rightOutAnim);
+                                findViewById(R.id.answer3).startAnimation(rightOutAnim);
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            findViewById(R.id.question).startAnimation(leftInAnim);
+                            if (isShowingAnswers[0]) {
+                                findViewById(R.id.answer1).startAnimation(leftInAnim);
+                                findViewById(R.id.answer2).startAnimation(leftInAnim);
+                                findViewById(R.id.answer3).startAnimation(leftInAnim);
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                            // we don't need to worry about this method
+                        }
+                    });
+
+                    leftInAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            if (!isShowingQuestion) {
+                                ((TextView) findViewById(R.id.real_answer)).setVisibility(View.INVISIBLE);
+                                ((TextView) findViewById(R.id.question)).setVisibility(View.VISIBLE);
+                                isShowingQuestion = true;
+                            }
+                            index --;
+                            ((TextView) findViewById(R.id.question)).setText(allFlashcards.get(index).getQuestion());
+                            ((TextView) findViewById(R.id.real_answer)).setText(allFlashcards.get(index).getAnswer());
+                            ((TextView) findViewById(R.id.answer1)).setText(allFlashcards.get(index).getWrongAnswer1());
+                            ((TextView) findViewById(R.id.answer2)).setText(allFlashcards.get(index).getWrongAnswer2());
+                            ((TextView) findViewById(R.id.answer3)).setText(allFlashcards.get(index).getAnswer());
+                            ((TextView) findViewById(R.id.answer1)).setBackgroundColor(getResources().getColor(R.color.orange));
+                            ((TextView) findViewById(R.id.answer2)).setBackgroundColor(getResources().getColor(R.color.orange));
+                            ((TextView) findViewById(R.id.answer3)).setBackgroundColor(getResources().getColor(R.color.orange));
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            startTimer();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                            // we don't need to worry about this method
+                        }
+                    });
+                    if (!isShowingQuestion) {
+                        ((TextView) findViewById(R.id.real_answer)).setVisibility(View.INVISIBLE);
+                        ((TextView) findViewById(R.id.question)).setVisibility(View.VISIBLE);
+                        isShowingQuestion = true;
+                    }
+                    findViewById(R.id.question).startAnimation(rightOutAnim);
                 }
             }
         });
@@ -111,16 +244,67 @@ public class MainActivity extends AppCompatActivity {
         // User can go to next flashcard
         findViewById(R.id.next_icon).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 if (index < allFlashcards.size() - 1) {
-                    index ++;
-                    ((TextView) findViewById(R.id.question)).setText(allFlashcards.get(index).getQuestion());
-                    ((TextView) findViewById(R.id.real_answer)).setText(allFlashcards.get(index).getAnswer());
-                    ((TextView) findViewById(R.id.answer1)).setText(allFlashcards.get(index).getWrongAnswer1());
-                    ((TextView) findViewById(R.id.answer2)).setText(allFlashcards.get(index).getWrongAnswer2());
-                    ((TextView) findViewById(R.id.answer3)).setText(allFlashcards.get(index).getAnswer());
-                    ((TextView) findViewById(R.id.answer1)).setBackgroundColor(getResources().getColor(R.color.orange));
-                    ((TextView) findViewById(R.id.answer2)).setBackgroundColor(getResources().getColor(R.color.orange));
-                    ((TextView) findViewById(R.id.answer3)).setBackgroundColor(getResources().getColor(R.color.orange));
+                    final Animation leftOutAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.left_out);
+                    final Animation rightInAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.right_in);
+
+                    rightInAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            index++;
+                            ((TextView) findViewById(R.id.question)).setText(allFlashcards.get(index).getQuestion());
+                            ((TextView) findViewById(R.id.real_answer)).setText(allFlashcards.get(index).getAnswer());
+                            ((TextView) findViewById(R.id.answer1)).setText(allFlashcards.get(index).getWrongAnswer1());
+                            ((TextView) findViewById(R.id.answer2)).setText(allFlashcards.get(index).getWrongAnswer2());
+                            ((TextView) findViewById(R.id.answer3)).setText(allFlashcards.get(index).getAnswer());
+                            ((TextView) findViewById(R.id.answer1)).setBackgroundColor(getResources().getColor(R.color.orange));
+                            ((TextView) findViewById(R.id.answer2)).setBackgroundColor(getResources().getColor(R.color.orange));
+                            ((TextView) findViewById(R.id.answer3)).setBackgroundColor(getResources().getColor(R.color.orange));
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            startTimer();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                            // we don't need to worry about this method
+                        }
+                    });
+
+                    leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            if (isShowingAnswers[0]) {
+                                findViewById(R.id.answer1).startAnimation(leftOutAnim);
+                                findViewById(R.id.answer2).startAnimation(leftOutAnim);
+                                findViewById(R.id.answer3).startAnimation(leftOutAnim);
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation){
+                            findViewById(R.id.question).startAnimation(rightInAnim);
+                            if (isShowingAnswers[0]) {
+                                findViewById(R.id.answer1).startAnimation(rightInAnim);
+                                findViewById(R.id.answer2).startAnimation(rightInAnim);
+                                findViewById(R.id.answer3).startAnimation(rightInAnim);
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                            // we don't need to worry about this method
+                        }
+                    });
+                    if (!isShowingQuestion) {
+                        ((TextView) findViewById(R.id.real_answer)).setVisibility(View.INVISIBLE);
+                        ((TextView) findViewById(R.id.question)).setVisibility(View.VISIBLE);
+                        isShowingQuestion = true;
+                    }
+                    findViewById(R.id.question).startAnimation(leftOutAnim);
                 }
             }
         });
@@ -144,6 +328,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.answer3).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 ((TextView) findViewById(R.id.answer3)).setBackgroundColor(getResources().getColor(R.color.green));
+                new ParticleSystem(MainActivity.this, 100, R.drawable.confetti, 3000)
+                        .setSpeedRange(0.2f, 0.5f)
+                        .oneShot(findViewById(R.id.answer3), 100);
             }
         });
 
@@ -179,7 +366,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NewFlashcard.class);
-                MainActivity.this.startActivityForResult(intent, 100);
+                startActivityForResult(intent, 100);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
@@ -198,6 +386,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     // Set the new question and answer
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

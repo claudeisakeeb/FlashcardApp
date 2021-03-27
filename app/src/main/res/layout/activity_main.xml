@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/answer1"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="Saturday"
         android:gravity="center"
         android:textSize="30sp"
@@ -94,13 +94,26 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/answer2"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:text="Sunday"
         android:gravity="center"
         android:textSize="30sp"
         android:visibility="visible"
         android:background="@color/orange"
         android:elevation="15dp"/>
+
+<!--    Timer-->
+    <TextView
+        android:id="@+id/timer"
+        android:textSize="30dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/answer3"
+        android:layout_marginTop="20dp"
+        />
 
 <!--    Show/hide answer options button -->
     <ImageView
