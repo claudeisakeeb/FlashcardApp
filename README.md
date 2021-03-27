@@ -18,7 +18,10 @@ This is my flashcard app for CodePath's Intro to Mobile App Development Program
 
 ### App Walk-though
 
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+Flashcard animation and confetti:
+<img src="http://g.recordit.co/M86ks8quiS.gif" width=200><br>
+Activity/flashcard transitions and timer:
+<img src="http://g.recordit.co/Bn6jW9z92R.gif" width=200><br>
 
 ## Lab 3:
 
