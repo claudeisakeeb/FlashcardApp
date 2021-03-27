@@ -56,7 +56,13 @@ This is my flashcard app for CodePath's Intro to Mobile App Development Program
 
 <img src="http://g.recordit.co/dIeCzUc3YQ.gif" width="200" height="400" />
 
-## Lab 1
+## Lab 1:
+
+- User's cards will save on reload:<br>
+<img src="http://g.recordit.co/UBt59tUXdo.gif" width=200><br>
+- Every other feature:<br>
+<img src="http://g.recordit.co/bunX1Iei9S.gif" width=200><br>
+>>>>>>> bee6973d621fe0da4c16e03106e3a45e977550ca
 
 ## Required
 - [x] Create New Project in Android Studio
