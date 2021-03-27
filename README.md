@@ -36,7 +36,7 @@ This is my flashcard app for CodePath's Intro to Mobile App Development Program
 
 <img src="http://g.recordit.co/tUUu72vxPd.gif" width="200" height="400" />
 
-##Lab 2:
+## Lab 2:
 
 ## Required
 - [x] User can click on a ‘+’ button that takes the user to new ‘Add Card Screen’
