@@ -1,6 +1,5 @@
 ## Claude's Flashcard App
 
-### App Description
 This is my flashcard app for CodePath's Intro to Mobile App Development Program
 
 ## Lab 4:
